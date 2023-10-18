@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 public class EmployeeRepositoryTests {
@@ -129,6 +130,28 @@ public class EmployeeRepositoryTests {
         // then - verify the output
         assertThat(updatedEmployee.getEmail()).isEqualTo("akın@email.com");
         assertThat(updatedEmployee.getFirstName()).isEqualTo("Akın");
+    }
+
+    // JUnit test for delete employee operation
+    @DisplayName("JUnit test for delete employee operation")
+    @Test
+    public void givenEmployeeObject_whenDelete_thenRemoveEmployee(){
+
+        // given - precondition or setup
+        Employee employee = Employee.builder()
+                .firstName("Onur")
+                .lastName("Haktan")
+                .email("onur@email.com")
+                .build();
+
+        employeeRepository.save(employee);
+
+        // when - action or behaviour that we are going to test
+        employeeRepository.deleteById(employee.getId());
+        Optional<Employee> optionalEmployee =  employeeRepository.findById(employee.getId());
+
+        // then - verify the output
+        assertThat(optionalEmployee).isEmpty();
     }
 
 }
