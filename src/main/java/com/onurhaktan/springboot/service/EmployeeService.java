@@ -11,4 +11,5 @@ public interface EmployeeService {
     // If no employee matching the specified id is found in the database, instead of returning null, an empty Optional object is returned.
     // This prevents NullPointerException errors.
     Optional<Employee> getEmployeeById(long id);
+    Employee updateEmployee(Employee updatedEmployee);
 }
