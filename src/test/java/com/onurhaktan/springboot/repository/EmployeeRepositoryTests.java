@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 import java.util.Optional;
 
+// It is used to test JPA-based database operations.
+// This annotation enables tests to run quickly and in isolation, and it can use in-memory databases to simulate database operations.
 @DataJpaTest
 public class EmployeeRepositoryTests {
 
@@ -19,6 +21,8 @@ public class EmployeeRepositoryTests {
     private EmployeeRepository employeeRepository;
 
     private Employee employee;
+
+    // It is used to define the preparatory operations that need to be done before a specific test method is executed in JUnit tests.
     @BeforeEach
     public void setup(){
         employee = Employee.builder()
