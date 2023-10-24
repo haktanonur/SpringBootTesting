@@ -12,4 +12,5 @@ public interface EmployeeService {
     // This prevents NullPointerException errors.
     Optional<Employee> getEmployeeById(long id);
     Employee updateEmployee(Employee updatedEmployee);
+    void deleteEmployee(long id);
 }
