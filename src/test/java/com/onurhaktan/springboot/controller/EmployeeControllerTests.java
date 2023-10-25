@@ -215,6 +215,8 @@ public class EmployeeControllerTests {
                 .willAnswer((invocation) -> invocation.getArgument(0));
 
         // when - action or behaviour that we  are going test
+
+        // This line sends a PUT request to the specified URL. It ensures that the body of this request contains the updatedEmployee object in JSON format.
         ResultActions response = mockMvc.perform(put("/api/employees/{id}", employeeId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updatedEmployee)));
@@ -222,5 +224,23 @@ public class EmployeeControllerTests {
         // then - verify the result or output using assert statements
         response.andExpect(status().isNotFound())
                 .andDo(print());
+    }
+
+    // Junit test for deleteEmployee REST API
+    @Test
+    public void givenEmployeeId_whenDeleteEmployee_thenReturn200() throws Exception {
+
+        // given - precondition or setup
+        // we should use "willDoNothing()" because deleteEmployee returns a void
+        long employeeId = 1L;
+        willDoNothing().given(employeeService).deleteEmployee(employeeId);
+
+        // when - action or behaviour that we  are going test
+        ResultActions response = mockMvc.perform(delete("/api/employees/{id}",employeeId));
+
+        // then - verify the result or output using assert statements
+        response.andExpect(status().isOk())
+                .andDo(print());
+
     }
 }
