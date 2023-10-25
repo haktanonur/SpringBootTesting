@@ -14,6 +14,7 @@ import  org.hamcrest.CoreMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -98,4 +99,59 @@ public class EmployeeControllerTests {
                 .andDo(print());
     }
 
+    // positive scenario - valid employee id
+    // JUnit test for getEmployeeById controller
+    @Test
+    public void givenEmployeeId_whenGetEmployeeById_thenReturnEmployeeObject() throws Exception {
+
+        // given - precondition or setup
+        long employeeId = 1L;
+
+        Employee employee = Employee.builder()
+                .firstName("Onur")
+                .lastName("Haktan")
+                .email("onur@email.com")
+                .build();
+
+        given(employeeService.getEmployeeById(employeeId))
+                .willReturn(Optional.of(employee));
+
+        // when - action or behaviour that we  are going test
+        ResultActions response = mockMvc.perform(get("/api/employees/{id}", employeeId));
+
+        // then - verify the result or output using assert statements
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.firstName",
+                        CoreMatchers.is(employee.getFirstName())))
+                .andExpect(jsonPath("$.lastName",
+                        CoreMatchers.is(employee.getLastName())))
+                .andExpect(jsonPath("$.email",
+                        CoreMatchers.is(employee.getEmail())));
+    }
+
+    // negative scenario - invalid employee id
+    // JUnit test for getEmployeeById controller
+    @Test
+    public void givenInvalidEmployeeId_whenGetEmployeeById_thenReturnEmpty() throws Exception {
+
+        // given - precondition or setup
+        long employeeId = 1L;
+
+        Employee employee = Employee.builder()
+                .firstName("Onur")
+                .lastName("Haktan")
+                .email("onur@email.com")
+                .build();
+
+        given(employeeService.getEmployeeById(employeeId))
+                .willReturn(Optional.empty());
+
+        // when - action or behaviour that we  are going test
+        ResultActions response = mockMvc.perform(get("/api/employees/{id}", employeeId));
+
+        // then - verify the result or output using assert statements
+        response.andExpect(status().isNotFound())
+                .andDo(print());
+    }
 }
