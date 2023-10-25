@@ -35,7 +35,7 @@ public class EmployeeController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable("id") long employeeId,
                                                    @RequestBody Employee employee){
         return employeeService.getEmployeeById(employeeId)
