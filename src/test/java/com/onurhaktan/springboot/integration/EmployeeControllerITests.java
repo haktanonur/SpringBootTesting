@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -211,5 +212,26 @@ public class EmployeeControllerITests {
         // then - verify the result or output using assert statements
         response.andExpect(status().isNotFound())
                 .andDo(print());
+    }
+
+    // Junit test for deleteEmployee REST API
+    @Test
+    public void givenEmployeeId_whenDeleteEmployee_thenReturn200() throws Exception {
+
+        // given - precondition or setup
+        Employee savedEmployee = Employee.builder()
+                .firstName("Onur")
+                .lastName("Haktan")
+                .email("onur@email.com")
+                .build();
+        employeeRepository.save(savedEmployee);
+
+        // when - action or behaviour that we  are going test
+        ResultActions response = mockMvc.perform(delete("/api/employees/{id}",savedEmployee.getId()));
+
+        // then - verify the result or output using assert statements
+        response.andExpect(status().isOk())
+                .andDo(print());
+
     }
 }
