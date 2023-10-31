@@ -28,18 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@Testcontainers    // this annotation will integrate JUnit5 with Testcontainers
-public class EmployeeControllerIT {
+// @Testcontainers    // this annotation will integrate JUnit5 with Testcontainers
+public class EmployeeControllerIT extends AbstractionBaseTest{
 
-    @Container // manage the lifecycle of this container
-    private static MySQLContainer mySQLContainer = new MySQLContainer("mysql:latest");
-
-    @DynamicPropertySource
-    public static void dynamicPropertySource(DynamicPropertyRegistry registry){
-        registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", mySQLContainer::getUsername);
-        registry.add("spring.datasource.password", mySQLContainer::getPassword);
-    }
     @Autowired
     private MockMvc mockMvc;
 

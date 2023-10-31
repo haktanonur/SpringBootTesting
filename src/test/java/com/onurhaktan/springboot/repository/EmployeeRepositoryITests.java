@@ -1,4 +1,4 @@
-package com.onurhaktan.springboot.integration;
+package com.onurhaktan.springboot.repository;
 
 import com.onurhaktan.springboot.model.Employee;
 import com.onurhaktan.springboot.repository.EmployeeRepository;
